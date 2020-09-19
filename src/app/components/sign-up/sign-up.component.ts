@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {FormControl,FormBuilder,FormGroup} from '@angular/forms'
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/signup/user.service';
 
@@ -10,9 +12,12 @@ import { UserService } from 'src/app/service/signup/user.service';
 })
 export class SignUpComponent implements OnInit {
 
-  signupForm: FormGroup
+  signupForm: FormGroup;
+  error: string;
+  success: string;
 
-  constructor(private formBuilder:FormBuilder,private userService: UserService) { }
+  constructor(private formBuilder:FormBuilder,private userService: UserService
+    ,private router: Router) { }
 
   ngOnInit() {
     this.signupForm=this.formBuilder.group({
@@ -35,10 +40,16 @@ export class SignUpComponent implements OnInit {
    this.userService.signUp(user).subscribe({
      next: (result)=>{
       console.log(result);
+      this.success=result.message;
+      this.error=undefined;
+      this.signupForm.reset();
+      this.router.navigate(['login']);
+      
       
      },
-     error:(error)=>{
-      alert("error")
+     error:(response:HttpErrorResponse)=>{
+     this.error=response.error.error.message;
+     this.success=undefined
      }
    });
     

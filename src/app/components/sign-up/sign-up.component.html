@@ -1,8 +1,11 @@
 <div class="text-center mt-4">
+
+    <p *ngIf="error" class="alert alert-danger">{{error}}</p>
+    <p *ngIf="success" class="alert alert-success">{{success}}</p>
  
     <form [formGroup] ="signupForm" class="form-signin border rounded" (ngSubmit)="onSubmit()">
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">User Signup Form</h1>
         <label for="inputName" class="sr-only">Name</label>
         <input type="text" id="inputName" class="form-control mb-2" placeholder="Name" required autofocus formControlName='name'>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -10,7 +13,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control mb-2" placeholder="Password" required  formControlName='password'>
         <label for="inputPhone" class="sr-only">Phone</label>
-        <input type="password" id="inputPhone" class="form-control" placeholder="Phone" required  formControlName='phone'>
+        <input type="text" id="inputPhone" class="form-control" placeholder="Phone" required  formControlName='phone'>
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me

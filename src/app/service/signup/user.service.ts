@@ -1,17 +1,36 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { User } from 'src/app/models/user';
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl="http://localhost/api/users/signup"
+  baseUrl = "http://localhost/api/users/signup"
+  loginUrl = "http://localhost/api/users/login"
 
   constructor(private http: HttpClient) { }
 
 
-  signUp(user: User){
-    return this.http.post(this.baseUrl,user)
+  signUp(user: User) {
+    return this.http.post(this.baseUrl, user).pipe(
+      map(
+        (res) => {
+          return <{ message: string }>res
+        }
+      )
+    )
   }
+  login(credential: { "email": string, "password": string }) {
+    return this.http.post(this.loginUrl, credential).pipe(
+      map((res)=>{
+        return <loginResponse>res
+      })
+    )
+  }
+}
+interface loginResponse{
+  message: string;
+  token: string
 }
