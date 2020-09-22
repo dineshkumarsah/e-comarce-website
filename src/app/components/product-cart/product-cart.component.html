@@ -1,8 +1,20 @@
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
+    <img class="card-img-top" src="http://localhost/{{products.productImage}}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">{{products.name}}</h5>
+      <p class="card-text">{{products.price}}</p>
+      <div class="car-footer p-0">
+        <a *ngIf="!quantity else cardQunti" class="btn-block btn btn-block  btn-light" (click)="addToCart()">Add</a>
+
+        <ng-template #cardQunti>
+          <div class="row no-gatters">
+            <div class="col-sm-2"><button class="btn btn-block btn-seconary" (click)="decreaseQuantity()">-</button></div>
+            <div class="col text-center"> {{quantity}} In Cart</div>
+            <div class="col-sm-2"><button (click)="increaseQuantity()" class="btn btn-block btn-seconary">+</button></div>
+          </div>
+        </ng-template>
+        
+      </div>
+     
     </div>
   </div>
