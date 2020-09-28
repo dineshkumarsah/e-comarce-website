@@ -13,7 +13,7 @@ export class ProductCartComponent implements OnInit {
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
-    debugger;
+   
     this.cartService.getCartObservable().subscribe({
       next: (res)=>{
         this.quantity=this.cartService.productQuantity(this.products)
@@ -29,13 +29,13 @@ export class ProductCartComponent implements OnInit {
   this.cartService.addToCart(this.products)
     
   }
-  decreaseQuantity(){
-    this.quantity--
-    this.cartService.setquantity(this.products,this.quantity)
-  }
-  increaseQuantity(){
-    this.quantity++
-    this.cartService.setquantity(this.products,this.quantity)
-  }
+  // decreaseQuantity(){
+  //   this.quantity--
+  //   this.cartService.setquantity(this.products,this.quantity)
+  // }
+  // increaseQuantity(){
+  //   this.quantity++
+  //   this.cartService.setquantity(this.products,this.quantity)
+  // }
 
 }

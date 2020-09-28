@@ -15,7 +15,7 @@
                 <td>{{i+1}}</td>
                 <td><img class="img-rounded" src="http://localhost/{{item.product.productImage}}" alt="" height="80px" ></td>
                 <td>{{item.product.name}}</td>
-                <td>{{item.quantity}}</td>
+                <td><app-quantity [products]="item.product"></app-quantity></td>
                 <td>{{item.product.price | currency:'INR'}}</td>
                 <td>{{item.quantity*item.product.price | currency:'INR'}}</td>
             </tr>

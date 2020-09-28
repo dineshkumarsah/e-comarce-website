@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/service/cart/cart.service'
@@ -15,9 +15,10 @@ interface cartItems {
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cartItem: cartItems[] = [];
   total=0
+  carSubscription: Subscription
   constructor(private cartService: CartService, private productSerice: ProductService) { }
 
   ngOnInit() {
@@ -27,15 +28,21 @@ export class CartComponent implements OnInit {
   }
 
   cartSubcribe(){
-    this.cartService.getCartObservable().subscribe({
+    let total = 0;
+   this.carSubscription= this.cartService.getCartObservable().subscribe({
       next: (cart) => {
-        this.cartItem = [];
-        let observable = []
+        // this.cartItem = [];
+        let observable = []; 
+        total=0;
+        if(Object.keys(cart).length==0){
+          this.cartItem = []
+        }
+       
         for (let id in cart) {
           observable.push(this.productSerice.getProductById(id).
             pipe(
               map((product) => {
-                this.total+=(product.price* cart[id])
+                total+=(product.price* cart[id])
                 let item: cartItems = {
                   product: product,
                   quantity: cart[id]
@@ -48,6 +55,7 @@ export class CartComponent implements OnInit {
             next: (res: cartItems[]) => {
               this.cartItem = res;
               console.log(res);
+              this.total=total
             },
             error: (error) => {
               console.log(error);
@@ -61,6 +69,10 @@ export class CartComponent implements OnInit {
 
       }
     });
+  }
+
+  ngOnDestroy(){
+    this.carSubscription.unsubscribe();
   }
 
 }

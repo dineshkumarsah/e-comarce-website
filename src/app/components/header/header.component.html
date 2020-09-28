@@ -6,28 +6,31 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+        <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active" *ngIf="isLoggedIn">
                 <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item active" *ngIf="isLoggedIn">
                 <a class="nav-link" href="#">Store <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="isAdmin" class="nav-item" >
                 <a class="nav-link" href="#">Admin dashboard</a>
             </li>
         </ul>
         <ul class=" navbar-nav my-2 my-lg-0">
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="isLoggedIn">
                 <a class="nav-link disabled" routerLink="/order" tabindex="-1" aria-disabled="true">order</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="isLoggedIn">
                 <a class="nav-link disabled" routerLink="/cart" tabindex="-1" aria-disabled="true">cart<span class="badge badge-primary">{{quantity}}</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" routerLink="/login" tabindex="-1" aria-disabled="true">login</a>
+                <a class="nav-link disabled"  *ngIf="!isLoggedIn" routerLink="/login" tabindex="-1" aria-disabled="true">login</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a (click)="logout()" class="nav-link disabled" routerLink="/login" tabindex="-1" aria-disabled="true">Logout</a>
+            </li>
+            <li class="nav-item" *ngIf="!isLoggedIn">
                 <a class="nav-link disabled" routerLink="/signup" tabindex="-1" aria-disabled="true">Sign up</a>
             </li>
 

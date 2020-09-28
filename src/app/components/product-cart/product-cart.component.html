@@ -7,11 +7,7 @@
         <a *ngIf="!quantity else cardQunti" class="btn-block btn btn-block  btn-light" (click)="addToCart()">Add</a>
 
         <ng-template #cardQunti>
-          <div class="row no-gatters">
-            <div class="col-sm-2"><button class="btn btn-block btn-seconary" (click)="decreaseQuantity()">-</button></div>
-            <div class="col text-center"> {{quantity}} In Cart</div>
-            <div class="col-sm-2"><button (click)="increaseQuantity()" class="btn btn-block btn-seconary">+</button></div>
-          </div>
+          <app-quantity [products]= "products"></app-quantity>
         </ng-template>
         
       </div>

@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {FormControl,FormGroup,FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/service/signup/user.service';
 
 @Component({
@@ -9,8 +10,9 @@ import { UserService } from 'src/app/service/signup/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
    loginForm: FormGroup;
+   userUnSubscription:Subscription
    success:string;
    error: string;
   constructor(private fb: FormBuilder, private userservice: UserService, private router: Router) { }
@@ -26,7 +28,7 @@ export class LoginComponent implements OnInit {
      "email":this.loginForm.value.email,
      "password": this.loginForm.value.password
     }
-   this.userservice.login(credential).subscribe({
+ this.userUnSubscription=  this.userservice.login(credential).subscribe({
      next: (res)=>{
        this.success= res.message;
        this.error=undefined;
@@ -42,6 +44,9 @@ export class LoginComponent implements OnInit {
 
    })
     
+  }
+  ngOnDestroy(){
+    this.userUnSubscription.unsubscribe();
   }
 
 }

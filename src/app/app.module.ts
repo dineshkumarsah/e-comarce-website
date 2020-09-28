@@ -13,7 +13,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule} from '@angular/common/http';
+import { QuantityComponent } from './components/quantity/quantity.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {HttpClientModule} from '@angular/common/http'
     UserOrderComponent,
     CartComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    QuantityComponent
   ],
   imports: [
     BrowserModule,
